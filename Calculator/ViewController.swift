@@ -15,16 +15,9 @@ class ViewController: UIViewController {
         createResultView()
     }
     
-//    func createFirstStackView() {
-//        let firstStackView = UIStackView()
-//        view.addSubview(firstStackView)
-//
-//        stackView.addArrangedSubview()
-//    }
-//
     func createResultView() {
         let resultView = UIView()
-        resultView.backgroundColor = UIColor(red: 222/255, green: 230/255, blue: 238/255, alpha: 255/255)
+        resultView.backgroundColor = UIColor(red: 219/255, green: 228/255, blue: 235/255, alpha: 255/255)
         self.view.addSubview(resultView)
         
         resultView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,33 +52,26 @@ class ViewController: UIViewController {
         calculationLabel.text = "sa"
         calculationLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         calculationLabel.font = UIFont.systemFont(ofSize: 17)
+        calculationLabel.textAlignment = .right
         
         let calculatorTextField = UITextField()
         calculatorTextField.placeholder = "Enter text"
         calculatorTextField.textAlignment = .right
    
-        calculatorTextField.font = UIFont.systemFont(ofSize: 24)
+        calculatorTextField.font = UIFont.systemFont(ofSize: 26)
         calculatorTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true // Adjust the height here
- 
-        calculatorTextField.backgroundColor = .yellow
+
         
         let textfieldStackView = UIStackView(arrangedSubviews: [calculationLabel, calculatorTextField])
         resultView.addSubview(textfieldStackView)
-        textfieldStackView.spacing = 10
+        textfieldStackView.spacing = 5
         textfieldStackView.axis = .vertical
-        
-
-//        calculationLabel.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            calculationLabel.topAnchor.constraint(equalTo: calculatorTextField.topAnchor, constant: 20),
-//            calculationLabel.centerYAnchor.constraint(equalTo: calculatorTextField.centerYAnchor)
-//        ])
 
         
         textfieldStackView.translatesAutoresizingMaskIntoConstraints = false
                NSLayoutConstraint.activate([
-                textfieldStackView.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
-                textfieldStackView.bottomAnchor.constraint(equalTo: resultView.bottomAnchor, constant: -60)
+                textfieldStackView.trailingAnchor.constraint(equalTo: resultView.trailingAnchor, constant: -20),
+                textfieldStackView.bottomAnchor.constraint(equalTo: resultView.bottomAnchor, constant: -40)
                ])
         
                createCalculationView(resultView)
@@ -102,38 +88,43 @@ class ViewController: UIViewController {
             calculationView.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
             calculationView.topAnchor.constraint(equalTo: resultView.bottomAnchor),
             calculationView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-      /*      calculationView.heightAnchor.constraint(equalToConstant: 100)*/  // Adjust the height as needed
         ])
         
-        let buttonCount = 4
-        let buttonWidth: CGFloat = 50
-        let buttonHeight: CGFloat = 30
-        let spacing: CGFloat = 10
+        let buttonsContainer = UIStackView()
+        buttonsContainer.axis = .vertical
+        buttonsContainer.spacing = 20
+        buttonsContainer.distribution = .fillEqually
+        calculationView.addSubview(buttonsContainer)
         
-        let buttonStackView = UIStackView()
-        buttonStackView.backgroundColor = .red
-        buttonStackView.axis = .horizontal
-        buttonStackView.spacing = spacing
-        
-        for i in 0..<buttonCount {
-            let button = UIButton(type: .system)
-            button.backgroundColor = .black
+        for stackIndex in 0..<5 {
+            let buttonCount = 4
+            let buttonWidth: CGFloat = 50
+            let buttonHeight: CGFloat = 30
+            let spacing: CGFloat = 20
             
-            buttonStackView.addArrangedSubview(button)
-            button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-            button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+            let buttonStackView = UIStackView()
+            buttonStackView.axis = .horizontal
+            buttonStackView.distribution = .fillEqually
+            buttonStackView.spacing = spacing
+            
+            for buttonIndex in 0..<buttonCount {
+                let button = UIButton(type: .system)
+                button.backgroundColor = .black
+                
+                buttonStackView.addArrangedSubview(button)
+                button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+                button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+            }
+            
+            buttonsContainer.addArrangedSubview(buttonStackView)
         }
         
-        calculationView.addSubview(buttonStackView)
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            buttonStackView.leadingAnchor.constraint(equalTo: calculationView.leadingAnchor, constant: 20),
-            buttonStackView.trailingAnchor.constraint(equalTo: calculationView.trailingAnchor, constant: -20),
-            buttonStackView.topAnchor.constraint(equalTo: calculationView.topAnchor, constant: 20),
-//            buttonStackView.bottomAnchor.constraint(equalTo: calculationView.bottomAnchor, constant: -20)
+            buttonsContainer.leadingAnchor.constraint(equalTo: calculationView.leadingAnchor, constant: 20),
+            buttonsContainer.trailingAnchor.constraint(equalTo: calculationView.trailingAnchor, constant: -20),
+            buttonsContainer.topAnchor.constraint(equalTo: calculationView.topAnchor, constant: 20),
+            buttonsContainer.bottomAnchor.constraint(equalTo: calculationView.bottomAnchor, constant: -20)
         ])
     }
-
-
 }
-
