@@ -55,7 +55,7 @@ class ViewController: UIViewController {
         // Modüler yap
         
         let calculationLabel = UILabel()
-        calculationLabel.backgroundColor = .green
+    
         calculationLabel.text = "sa"
         calculationLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         calculationLabel.font = UIFont.systemFont(ofSize: 17)
@@ -101,37 +101,39 @@ class ViewController: UIViewController {
             calculationView.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
             calculationView.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
             calculationView.topAnchor.constraint(equalTo: resultView.bottomAnchor),
-            calculationView.bottomAnchor.constraint(equalTo: resultView.bottomAnchor)
+            calculationView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      /*      calculationView.heightAnchor.constraint(equalToConstant: 100)*/  // Adjust the height as needed
         ])
         
-        
-        // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         let buttonCount = 4
         let buttonWidth: CGFloat = 50
         let buttonHeight: CGFloat = 30
         let spacing: CGFloat = 10
         
         let buttonStackView = UIStackView()
-            buttonStackView.axis = .horizontal
-            buttonStackView.spacing = spacing
+        buttonStackView.backgroundColor = .red
+        buttonStackView.axis = .horizontal
+        buttonStackView.spacing = spacing
         
         for i in 0..<buttonCount {
             let button = UIButton(type: .system)
             button.backgroundColor = .black
             
             buttonStackView.addArrangedSubview(button)
-                    button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-                    button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+            button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+            button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         }
         
         calculationView.addSubview(buttonStackView)
-           buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-           NSLayoutConstraint.activate([
-               buttonStackView.leadingAnchor.constraint(equalTo: calculationView.leadingAnchor, constant: 20),
-               buttonStackView.trailingAnchor.constraint(equalTo: calculationView.trailingAnchor, constant: -20),
-               buttonStackView.bottomAnchor.constraint(equalTo: calculationView.bottomAnchor, constant: -20),
-               buttonStackView.heightAnchor.constraint(equalToConstant: buttonHeight)
-           ])
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buttonStackView.leadingAnchor.constraint(equalTo: calculationView.leadingAnchor, constant: 20),
+            buttonStackView.trailingAnchor.constraint(equalTo: calculationView.trailingAnchor, constant: -20),
+            buttonStackView.topAnchor.constraint(equalTo: calculationView.topAnchor, constant: 20),
+//            buttonStackView.bottomAnchor.constraint(equalTo: calculationView.bottomAnchor, constant: -20)
+        ])
     }
+
+
 }
 
