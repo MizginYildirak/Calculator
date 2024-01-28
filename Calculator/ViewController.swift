@@ -1,11 +1,30 @@
+
 import UIKit
+
+
+
 
 class ViewController: UIViewController {
 
+    let calculatorButtonModel = CalculatorButtonModel(title: <#String#>, type: <#CalculatorButtonType#>)
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createResultView()
     }
+    
+    var arr: [String] = []
+
+    let buttonLabels = ["C", "()", "%", "÷"]
+//    let buttonLabels1 = ["C", "()", "%", "÷", "1", "2", "3", "x", "4", "5", "6", "+", "7", "8", "9", "-", ".", "0", "000", "="]
+    let buttonLabels2 = ["1", "2", "3", "x"]
+    let buttonLabels3 = ["4", "5", "6", "+"]
+    let buttonLabels4 = ["7", "8", "9", "-"]
+    let buttonLabels5 = ["000", "0", ".", "="]
+    
+    
     
     func createResultView() {
         let resultView = createView(withColor: UIColor(red: 219/255, green: 228/255, blue: 235/255, alpha: 255/255))
@@ -48,16 +67,15 @@ class ViewController: UIViewController {
         
         return textfieldStackView
     }
-
     func createCalculationView(_ resultView: UIView) {
         let calculationView = createView(withColor: UIColor(red: 234/255, green: 238/255, blue: 243/255, alpha: 255/255))
-        resultView.addSubview(calculationView)
+        view.addSubview(calculationView)
         
         NSLayoutConstraint.activate([
             calculationView.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
             calculationView.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
-            calculationView.topAnchor.constraint(equalTo: resultView.bottomAnchor),
-            calculationView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            calculationView.topAnchor.constraint(equalTo: resultView.bottomAnchor),  // Change here
+            calculationView.bottomAnchor.constraint(equalTo: view.bottomAnchor)     // Change here
         ])
         
         let buttonsContainer = createButtonsContainer()
@@ -71,6 +89,7 @@ class ViewController: UIViewController {
         ])
     }
 
+
     func createButtonsContainer() -> UIStackView {
         let buttonsContainer = UIStackView()
         buttonsContainer.axis = .vertical
@@ -78,28 +97,60 @@ class ViewController: UIViewController {
         buttonsContainer.distribution = .fillEqually
         buttonsContainer.translatesAutoresizingMaskIntoConstraints = false
         
-        for _ in 0..<5 {
-            let buttonStackView = createButtonStackView()
+        for j in 0..<5 {
+            let buttonStackView = createButtonStackView(index: j)
             buttonsContainer.addArrangedSubview(buttonStackView)
         }
         
         return buttonsContainer
     }
+    
 
-    func createButtonStackView() -> UIStackView {
+
+    func createButtonStackView(index: Int) -> UIStackView {
         let buttonStackView = UIStackView()
         buttonStackView.axis = .horizontal
         buttonStackView.distribution = .fillEqually
         buttonStackView.spacing = 20
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        for _ in 0..<4 {
-            let button = createButton()
-            buttonStackView.addArrangedSubview(button)
+     
+        
+        switch index {
+        case 0:
+            arr = buttonLabels
+        case 1:
+            arr = buttonLabels2
+        case 2:
+            arr = buttonLabels3
+        case 3:
+            arr = buttonLabels4
+        case 4:
+            arr = buttonLabels5
+        default:
+            print("default")
         }
         
+        for i in 0..<4 {
+            let button = createButton(with: arr[i])
+            
+         
+            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+      
+          
+            buttonStackView.addArrangedSubview(button)
+        }
+
         return buttonStackView
     }
+    
+    @objc func buttonTapped(_ sender: UIButton) {
+        guard let title = sender.currentTitle else { return }
+        print(title)
+      }
+
+
+    
 
     // Utility Functions
 
@@ -129,11 +180,15 @@ class ViewController: UIViewController {
         return textField
     }
 
-    func createButton() -> UIButton {
+    func createButton(with title: String) -> UIButton {
         let button = UIButton(type: .system)
-        button.backgroundColor = .black
+        button.backgroundColor = .white
         button.layer.cornerRadius = 20
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+
+        
         return button
     }
 }
