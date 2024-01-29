@@ -6,9 +6,12 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    let calculatorButtonModel = CalculatorButtonModel(title: <#String#>, type: <#CalculatorButtonType#>)
-    
-    
+
+    var firstRow: [CalculatorButtonModel] = []
+    var secondRow: [CalculatorButtonModel] = []
+    var thirdRow: [CalculatorButtonModel] = []
+    var fourthRow: [CalculatorButtonModel] = []
+    var fifthRow: [CalculatorButtonModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,13 +20,23 @@ class ViewController: UIViewController {
     
     var arr: [String] = []
 
-    let buttonLabels = ["C", "()", "%", "÷"]
+    let buttonLabels = ["C", "%", "()", "÷"]
 //    let buttonLabels1 = ["C", "()", "%", "÷", "1", "2", "3", "x", "4", "5", "6", "+", "7", "8", "9", "-", ".", "0", "000", "="]
     let buttonLabels2 = ["1", "2", "3", "x"]
     let buttonLabels3 = ["4", "5", "6", "+"]
     let buttonLabels4 = ["7", "8", "9", "-"]
     let buttonLabels5 = ["000", "0", ".", "="]
     
+    func fillButtonArrays() {
+        let deleteBtn = CalculatorButtonModel(title: "C", titles: <#[String]#>, type: .delete)
+        let moduloBtn = CalculatorButtonModel(title: "%", titles: <#[String]#>, type: .delete)
+        let backspaceBtn = CalculatorButtonModel(title: "()", titles: [String], type: .delete)
+        let divideBtn = CalculatorButtonModel(title: "/", titles: <#[String]#>, type: .delete)
+        let numbers = CalculatorButtonModel(title: <#T##String#>, titles: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], type: .number)
+        
+        firstRow.append(contentsOf: [deleteBtn, moduloBtn, backspaceBtn, divideBtn])
+        secondRow.append(contentsOf: [])
+    }
     
     
     func createResultView() {
