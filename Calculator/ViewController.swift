@@ -15,29 +15,53 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fillButtonArrays()
         createResultView()
     }
     
-    var arr: [String] = []
+    var firstSayı: Int?
+    var arr: [CalculatorButtonModel] = []
+    var buttons: [CalculatorButtonModel] = []
 
-    let buttonLabels = ["C", "%", "()", "÷"]
-//    let buttonLabels1 = ["C", "()", "%", "÷", "1", "2", "3", "x", "4", "5", "6", "+", "7", "8", "9", "-", ".", "0", "000", "="]
-    let buttonLabels2 = ["1", "2", "3", "x"]
-    let buttonLabels3 = ["4", "5", "6", "+"]
-    let buttonLabels4 = ["7", "8", "9", "-"]
-    let buttonLabels5 = ["000", "0", ".", "="]
+//    let buttonLabels = ["C", "%", "()", "÷"]
+////    let buttonLabels1 = ["C", "()", "%", "÷", "1", "2", "3", "x", "4", "5", "6", "+", "7", "8", "9", "-", ".", "0", "000", "="]
+//    let buttonLabels2 = ["1", "2", "3", "x"]
+//    let buttonLabels3 = ["4", "5", "6", "+"]
+//    let buttonLabels4 = ["7", "8", "9", "-"]
+//    let buttonLabels5 = ["000", "0", ".", "="]
     
     func fillButtonArrays() {
-        let deleteBtn = CalculatorButtonModel(title: "C", titles: <#[String]#>, type: .delete)
-        let moduloBtn = CalculatorButtonModel(title: "%", titles: <#[String]#>, type: .delete)
-        let backspaceBtn = CalculatorButtonModel(title: "()", titles: [String], type: .delete)
-        let divideBtn = CalculatorButtonModel(title: "/", titles: <#[String]#>, type: .delete)
-        let numbers = CalculatorButtonModel(title: <#T##String#>, titles: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], type: .number)
+        let deleteBtn = CalculatorButtonModel(title: "C", type: .delete)
+        let moduloBtn = CalculatorButtonModel(title: "%", type: .modulo)
+        let backspaceBtn = CalculatorButtonModel(title: "()", type: .backspace)
+        let divideBtn = CalculatorButtonModel(title: "/", type: .divide)
+        
+        let num1 = CalculatorButtonModel(title: "1", type: .number)
+        let num2 = CalculatorButtonModel(title: "2", type: .number)
+        let num3 = CalculatorButtonModel(title: "3", type: .number)
+        let num4 = CalculatorButtonModel(title: "4", type: .number)
+        let num5 = CalculatorButtonModel(title: "5", type: .number)
+        let num6 = CalculatorButtonModel(title: "6", type: .number)
+        let num7 = CalculatorButtonModel(title: "7", type: .number)
+        let num8 = CalculatorButtonModel(title: "8", type: .number)
+        let num9 = CalculatorButtonModel(title: "9", type: .number)
+        let num0 = CalculatorButtonModel(title: "0", type: .number)
+        let num000 = CalculatorButtonModel(title: "000", type: .number)
+        
+        let multiplyBtn = CalculatorButtonModel(title: "*", type: .multiply)
+        let sumBtn = CalculatorButtonModel(title: "+", type: .sum)
+        let extractBtn = CalculatorButtonModel(title: "-", type: .extract)
+        let equalBtn = CalculatorButtonModel(title: "=", type: .equal)
+        let pointBtn = CalculatorButtonModel(title: ".", type: .point)
         
         firstRow.append(contentsOf: [deleteBtn, moduloBtn, backspaceBtn, divideBtn])
-        secondRow.append(contentsOf: [])
+        secondRow.append(contentsOf: [num1, num2, num3, multiplyBtn])
+        thirdRow.append(contentsOf: [num4, num5, num6, sumBtn])
+        fourthRow.append(contentsOf: [num7, num8, num9, extractBtn])
+        fifthRow.append(contentsOf: [num000, num0, pointBtn, equalBtn])
+        
+        buttons.append(contentsOf: [num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, num000, multiplyBtn, sumBtn, extractBtn, equalBtn, pointBtn, backspaceBtn, deleteBtn, divideBtn, moduloBtn])
     }
-    
     
     func createResultView() {
         let resultView = createView(withColor: UIColor(red: 219/255, green: 228/255, blue: 235/255, alpha: 255/255))
@@ -118,8 +142,6 @@ class ViewController: UIViewController {
         return buttonsContainer
     }
     
-
-
     func createButtonStackView(index: Int) -> UIStackView {
         let buttonStackView = UIStackView()
         buttonStackView.axis = .horizontal
@@ -127,25 +149,23 @@ class ViewController: UIViewController {
         buttonStackView.spacing = 20
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         
-     
-        
         switch index {
         case 0:
-            arr = buttonLabels
+            arr = firstRow
         case 1:
-            arr = buttonLabels2
+            arr = secondRow
         case 2:
-            arr = buttonLabels3
+            arr = thirdRow
         case 3:
-            arr = buttonLabels4
+            arr = fourthRow
         case 4:
-            arr = buttonLabels5
+            arr = fifthRow
         default:
             print("default")
         }
         
         for i in 0..<4 {
-            let button = createButton(with: arr[i])
+            let button = createButton(with: arr[i].title)
             
          
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
@@ -159,8 +179,28 @@ class ViewController: UIViewController {
     
     @objc func buttonTapped(_ sender: UIButton) {
         guard let title = sender.currentTitle else { return }
+        
         print(title)
+        
+        let x = buttons.filter{ $0.title == title }.first
+        
+        if let x {
+            if x.type == .number{
+                firstSayı = Int(x.title)
+            }
+        }
+        
       }
+    
+//    func findElementInArray(_ title: String, inArray arr: [CalculatorButtonModel]) -> CalculatorButtonModel? {
+//        for _ in arr {
+//            if element.title == title {
+//                return element
+//            } else{
+//                return nil
+//            }
+//        }
+//    }
 
 
     

@@ -10,7 +10,7 @@ import Foundation
 struct CalculatorButtonModel {
     let id = UUID()
     let title: String
-    let titles: [String]
+ 
     let type: CalculatorButtonType
 }
 
